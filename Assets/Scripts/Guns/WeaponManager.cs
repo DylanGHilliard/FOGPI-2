@@ -1,0 +1,70 @@
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
+
+[CustomEditor(typeof(WeaponManager))]
+public class WeaponManagerEditor : Editor
+{
+    private WeaponManager weaponManager;
+
+    public override void OnInspectorGUI()
+    {
+        base.OnInspectorGUI();
+        WeaponManager wm = (WeaponManager)target;
+
+        if (GUILayout.Button("Prev"))
+        {
+            wm.PrevWeapon();
+        }
+        if (GUILayout.Button("Next"))
+        {
+            wm.NextWeapon();
+        }
+        if (GUILayout.Button("Use"))
+        {
+            wm.Use();
+        }
+    }
+
+
+
+}
+
+public class WeaponManager : MonoBehaviour
+{
+    public List<Weapon> weapons;
+    public Weapon currentWeapon;
+    private int currentWeaponIndex = 0;
+
+    public void Use()
+    {
+        if (currentWeapon) currentWeapon.Use();
+
+    }
+
+    public void PrevWeapon()
+    {
+        if (weapons.Count <= 1) return;
+
+        currentWeaponIndex--;
+        if (currentWeaponIndex < 0)
+        {
+            currentWeaponIndex = weapons.Count - 1;
+        }
+        currentWeapon = weapons[currentWeaponIndex];
+        Debug.Log("Switched to " + currentWeapon.name);
+    }
+
+    public void NextWeapon()
+    {
+        if (weapons.Count <= 1) return;
+
+        currentWeaponIndex++;
+        if (currentWeaponIndex >= weapons.Count)
+        {
+            currentWeaponIndex = 0;
+        }
+        currentWeapon = weapons[currentWeaponIndex];
+        Debug.Log("Switched to " + currentWeapon.name);
+    }
+}
