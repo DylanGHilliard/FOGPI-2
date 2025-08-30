@@ -17,6 +17,12 @@ public class EnemyAI : MonoBehaviour
     private float time = 0;
     public float attackRate;
 
+    [Header("Detection Settings")]
+    public float detectionRange = 10;
+    public float patrolRadius = 5;
+    private bool isChasing;
+    private Vector3 randomDriection;
+
     Seeker seeker;
 
     Rigidbody2D rb;
@@ -29,13 +35,37 @@ public class EnemyAI : MonoBehaviour
 
         player = GameObject.Find("Player");
 
+        SetRandomPath();
         InvokeRepeating("UpdatePath", 0f, 0.5f);
     }
 
+    void SetRandomPath()
+    {
+        Vector2 randPoint = Random.insideUnitCircle * patrolRadius;
+        randomDriection = transform.position + new Vector3(randPoint.x, randPoint.y, 1);
+    }
     void UpdatePath()
     {
-        if (seeker.IsDone())
+        if (!seeker.IsDone()) return;
+
+        float disToPlayer = Vector2.Distance(rb.position, player.transform.position);
+
+        if (disToPlayer <= detectionRange)
+        {
+            isChasing = true;
             seeker.StartPath(rb.position, target.position, OnPathComplete);
+        }
+        else
+        {
+            isChasing = false;
+            // If reached random destination or no path, set new destination
+            if (reachedEndOfPath || path == null)
+            {
+                SetRandomPath();
+            }
+            seeker.StartPath(rb.position, randomDriection, OnPathComplete);
+        }
+          
     }
 
     void OnPathComplete(Path _p)
@@ -76,8 +106,10 @@ public class EnemyAI : MonoBehaviour
         {
             currentWaypoint++;
         }
+        
 
-        if ((transform.position - player.transform.position).magnitude < 1.5f && time > 1/attackRate)
+        //AttackPlayer
+        if ((transform.position - player.transform.position).magnitude < 1.5f && time > 1 / attackRate)
         {
 
             player.gameObject.GetComponent<Health>().TakeDamage(damage);
@@ -85,8 +117,4 @@ public class EnemyAI : MonoBehaviour
 
     }
 
-    public void OutOFHealth()
-    {
-        Destroy(gameObject);
-    }
 }
