@@ -12,7 +12,10 @@ public class EnemyAI : MonoBehaviour
     Path path;
     int currentWaypoint = 0;
     bool reachedEndOfPath = false;
-    public Transform player;
+    public GameObject player;
+    public int damage = 5;
+    private float time = 0;
+    public float attackRate;
 
     Seeker seeker;
 
@@ -23,6 +26,8 @@ public class EnemyAI : MonoBehaviour
     {
         seeker = GetComponent<Seeker>();
         rb = GetComponent<Rigidbody2D>();
+
+        player = GameObject.Find("Player");
 
         InvokeRepeating("UpdatePath", 0f, 0.5f);
     }
@@ -45,6 +50,7 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        time += Time.fixedDeltaTime;
         if (path == null)
             return;
 
@@ -62,14 +68,25 @@ public class EnemyAI : MonoBehaviour
         Vector2 force = direction * speed * Time.fixedDeltaTime;
 
         rb.AddForce(force);
-        rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, speed*1.5f);
+        rb.linearVelocity = Vector2.ClampMagnitude(rb.linearVelocity, speed * 1.5f);
 
         float distance = Vector2.Distance(rb.position, path.vectorPath[currentWaypoint]);
 
-        if(distance < nextWaypointDistance)
+        if (distance < nextWaypointDistance)
         {
             currentWaypoint++;
         }
 
+        if ((transform.position - player.transform.position).magnitude < 1.5f && time > 1/attackRate)
+        {
+
+            player.gameObject.GetComponent<Health>().TakeDamage(damage);
+        }
+
+    }
+
+    public void OutOFHealth()
+    {
+        Destroy(gameObject);
     }
 }
