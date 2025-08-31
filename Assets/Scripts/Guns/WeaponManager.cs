@@ -42,6 +42,19 @@ public class WeaponManager : MonoBehaviour
 
     }
 
+    public void Update()
+    {
+        if (Input.GetMouseButton(0))
+            currentWeapon.Use();
+
+        if (Input.GetKeyDown(KeyCode.Q))
+            PrevWeapon();
+
+        if (Input.GetKeyDown(KeyCode.E))
+            NextWeapon(); 
+        
+    }
+
     public void PrevWeapon()
     {
         if (weapons.Count <= 1) return;
@@ -51,7 +64,11 @@ public class WeaponManager : MonoBehaviour
         {
             currentWeaponIndex = weapons.Count - 1;
         }
-        currentWeapon = weapons[currentWeaponIndex];
+        
+        currentWeapon.gameObject.SetActive(false); // Turn off old gun
+
+        currentWeapon = weapons[currentWeaponIndex]; // Set new gun and turn on
+        currentWeapon.gameObject.SetActive(true);
         Debug.Log("Switched to " + currentWeapon.name);
     }
 
@@ -64,7 +81,10 @@ public class WeaponManager : MonoBehaviour
         {
             currentWeaponIndex = 0;
         }
-        currentWeapon = weapons[currentWeaponIndex];
+        currentWeapon.gameObject.SetActive(false); // Turn off old gun
+
+        currentWeapon = weapons[currentWeaponIndex]; // Set new gun and turn on
+        currentWeapon.gameObject.SetActive(true);
         Debug.Log("Switched to " + currentWeapon.name);
     }
 }
