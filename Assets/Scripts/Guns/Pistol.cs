@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class Pistol : Weapon
 {
-    private float time;
     
     public override void Use()
     {
@@ -14,8 +13,4 @@ public class Pistol : Weapon
         Debug.Log("Pistol fired");
     }
 
-    void Update()
-    {
-        time+= Time.deltaTime;
-    }
 }
