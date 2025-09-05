@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class WalletManager : MonoBehaviour
 {
-    public static WalletManager instance;
 
     [SerializeField] private int m_coin = 0;
 
@@ -10,8 +9,6 @@ public class WalletManager : MonoBehaviour
 
     void Awake()
     {
-        if (instance == null)
-            instance = this;
 
     }
     public bool ICanAfford(int _amount)
@@ -36,6 +33,11 @@ public class WalletManager : MonoBehaviour
 
         m_coin -= _amount;
 
+    }
+
+    public void SetCoins(int _amount)
+    {
+        m_coin = _amount;
     }
 
 }

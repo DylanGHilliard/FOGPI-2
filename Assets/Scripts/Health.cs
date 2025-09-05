@@ -4,14 +4,14 @@ using UnityEngine.Events;
 public class Health : MonoBehaviour
 {
 
-    [SerializeField] private int m_maxHealth = 100;
-    protected int m_currentHealth;
+    public int maxHealth = 100;
+    public int currentHealth;
     public UnityEvent outOfHealth;
     public UnityEvent hurt;
     public UnityEvent OnDeath;
     void Start()
     {
-        m_currentHealth = m_maxHealth;
+        currentHealth = maxHealth;
 
         if (outOfHealth == null)    outOfHealth = new UnityEvent();
         if (hurt == null)           hurt = new UnityEvent();
@@ -20,8 +20,8 @@ public class Health : MonoBehaviour
 
     public void TakeDamage(int _damage)
     {
-        m_currentHealth -= _damage;
-        if (m_currentHealth <= 0)
+        currentHealth -= _damage;
+        if (currentHealth <= 0)
         {
             Death();
         }
@@ -33,12 +33,34 @@ public class Health : MonoBehaviour
 
     public void Heal(int _amount)
     {
-        m_currentHealth += _amount;
-        if (m_currentHealth > m_maxHealth)
+        currentHealth += _amount;
+        if (currentHealth > maxHealth)
         {
-            m_currentHealth = m_maxHealth;
+            currentHealth = maxHealth;
         }
     }
+
+    public void SetCurrentHealth(int _amount)
+    {
+        currentHealth = _amount;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+        if (currentHealth <= 0)
+        {
+            Death();
+        }
+    }
+    public void SetMaxHealth(int _amount)
+    {
+        maxHealth = _amount;
+        if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
+    }
+
 
 
     private void Death()

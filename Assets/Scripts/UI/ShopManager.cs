@@ -13,4 +13,5 @@ public class ShopItems
 {
     public ItemSO item;
     public int price;
+    public bool isSold;
 }
