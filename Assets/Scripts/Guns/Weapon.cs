@@ -7,11 +7,19 @@ public class Weapon : MonoBehaviour
     public Transform firePoint;
     public float fireRate = 1f;
     public float time;
+    public ParticleSystem muzzleFlash;
 
     public virtual void Use() { }
     public virtual void Reload() { }
-    public void Update()
+
+    void Awake()
     {
-        time += Time.deltaTime;
+        muzzleFlash = GetComponentInChildren<ParticleSystem>();
+    
+    }
+
+    public void FixedUpdate()
+    {
+        time += Time.fixedDeltaTime;
     }
 }

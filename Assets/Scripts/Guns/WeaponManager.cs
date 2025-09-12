@@ -32,14 +32,17 @@ public class WeaponManagerEditor : Editor
 
 public class WeaponManager : MonoBehaviour
 {
-    public List<Weapon> weapons;
+    public List<Weapon> weapons = new List<Weapon>();
     public Weapon currentWeapon;
     private int currentWeaponIndex = 0;
+    void Start()
+    {
+        weapons = new List<Weapon>(GetComponentsInChildren<Weapon>());
+    }
 
     public void Use()
     {
         if (currentWeapon) currentWeapon.Use();
-
     }
 
     public void Update()

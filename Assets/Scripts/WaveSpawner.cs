@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class WaveSpawner : MonoBehaviour
@@ -9,13 +10,14 @@ public class WaveSpawner : MonoBehaviour
     public float spawnInterval;
     private float spawnTimer;
 
-    [SerializeField] private LayerMask wallLayer;
+    [SerializeField] private LayerMask groundLayer;
     [SerializeField] private Vector2 spawnAreaSize = new Vector2(10, 10);
 
     public bool IsValidSpawnPoint(Vector2 _pos)
     {
-        Collider2D[] colliders = Physics2D.OverlapCircleAll(_pos, 0.5f, wallLayer);
-        return colliders.Length == 0;
+        // Check if position is on the ground layer
+        Collider2D[] hitCollider = Physics2D.OverlapPointAll(_pos, ~groundLayer);
+        return hitCollider.Length != 0;
     }
 
     private Vector2 GetRandomPos() {
@@ -52,9 +54,10 @@ public class WaveSpawner : MonoBehaviour
             if (spawnPosition != new Vector2(transform.position.x, transform.position.y)) // Only spawn if valid position found
             {
                 GameObject enemyToSpawn = enemies[Random.Range(0, enemies.Count)];
-                Instantiate(enemyToSpawn, spawnPosition, Quaternion.identity);
+                Instantiate(enemyToSpawn,  spawnPosition, Quaternion.identity, this.transform);
                 amtToSpawn--;
                 spawnTimer = 0f;
+                
             }
         }
     }

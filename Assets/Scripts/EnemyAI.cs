@@ -65,7 +65,7 @@ public class EnemyAI : MonoBehaviour
             }
             seeker.StartPath(rb.position, randomDriection, OnPathComplete);
         }
-          
+
     }
 
     void OnPathComplete(Path _p)
@@ -106,15 +106,23 @@ public class EnemyAI : MonoBehaviour
         {
             currentWaypoint++;
         }
-        
+
 
         //AttackPlayer
         if ((transform.position - player.transform.position).magnitude < 1.5f && time > 1 / attackRate)
         {
 
-            player.gameObject.GetComponent<Health>().TakeDamage(damage);
+            PlayerManager.instance.health.TakeDamage(damage);
         }
 
+    }
+
+
+
+    public void OnDeath()
+    {
+        PlayerManager.instance.wallet.Earn(5);
+        Destroy(this.gameObject);
     }
 
 }
