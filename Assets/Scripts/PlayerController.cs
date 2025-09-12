@@ -11,9 +11,12 @@ public class PlayerController : MonoBehaviour
     private Vector2 mousePos;
     void Start()
     {
+        PlayerManager.instance.RegisterPlayer(this.gameObject);
         rb = GetComponent<Rigidbody2D>() == null ? gameObject.AddComponent<Rigidbody2D>() : GetComponent<Rigidbody2D>();
         rb.gravityScale = 0;
         rb.freezeRotation = true;
+        if (sceneCamera == null)
+            sceneCamera = Camera.main;
         
     }
     void Update()

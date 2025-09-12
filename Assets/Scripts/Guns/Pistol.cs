@@ -5,12 +5,12 @@ public class Pistol : Weapon
     
     public override void Use()
     {
-        if(time > 1/fireRate)
+        if (time > 1 / fireRate)
         {
             time = 0f;
             Instantiate(bulletPrefab, transform.position, firePoint.rotation);
+            muzzleFlash.Play();
         }
-        Debug.Log("Pistol fired");
     }
 
 }

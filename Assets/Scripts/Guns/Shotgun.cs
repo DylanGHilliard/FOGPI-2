@@ -18,9 +18,9 @@ public class Shotgun : Weapon
 
             Quaternion rotation = Quaternion.Euler(0, 0, randomAngle);
 
-            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation*rotation);
+            Instantiate(bulletPrefab, firePoint.position, firePoint.rotation * rotation);
             time = 0f;
+            muzzleFlash.Play();
         }
-        Debug.Log("Shotgun fired");
     }
 }

@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3907c0796caffc6b098209aa42d4f0cd, type: 3}
-  m_Name: Rifle
+  m_Script: {fileID: 11500000, guid: d0176d3c1a4fdfb15be67a06552e7d9d, type: 3}
+  m_Name: Pistol
   m_EditorClassIdentifier: 
-  itemName: Rifle
-  itemImage: {fileID: 2800000, guid: 078bdef5a129789f380e843ab9ada692, type: 3}
-  itemPrice: 100
+  weaponName: Pistol
+  weaponImage: {fileID: 0}
+  weaponPrice: 0
+  weaponPrefab: {fileID: 3070400932396584792, guid: 9068150729e0712e2973c28a7dc4c6a1, type: 3}
