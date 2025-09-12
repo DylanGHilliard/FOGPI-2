@@ -149,7 +149,7 @@ public class PlayerManager : MonoBehaviour
         {
             Debug.Log("in FOR LOOP");
             WeaponSO weapon = (WeaponSO)equipedWeapons[i];
-            Weapon weaponTemp = Instantiate(weapon.weaponPrefab, player.transform).GetComponent<Pistol>();
+            Weapon weaponTemp = Instantiate(weapon.weaponPrefab, player.transform.position + Vector3.right *0.5f, player.transform.rotation, player.transform).GetComponent<Pistol>();
             print("weaponTemp");
             wm.weapons.Add(weaponTemp);
              if (i == 0)
