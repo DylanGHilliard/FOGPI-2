@@ -133,9 +133,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f447d74d6b0ca47cd9fae1f946e87e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  equiped:
+    m_PersistentCalls:
+      m_Calls: []
+  reload:
+    m_PersistentCalls:
+      m_Calls: []
+  onShoot:
+    m_PersistentCalls:
+      m_Calls: []
   bulletPrefab: {fileID: 5219311241103507644, guid: 5d7ba701f4e223838a5dad37900c45b8, type: 3}
   firePoint: {fileID: 3031264277111854651}
-  fireRate: 2
+  fireRate: 4
   time: 0
   muzzleFlash: {fileID: 0}
 --- !u!1001 &4324472346515131934

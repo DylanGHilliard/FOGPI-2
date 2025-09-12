@@ -1055,7 +1055,9 @@ MonoBehaviour:
   health: {fileID: 0}
   wallet: {fileID: 0}
   weaponsPath: Weapons/
-  ownedWeapons: []
+  ownedWeapons:
+  - {fileID: 11400000, guid: 960987a988300630bac218ea97c89cf7, type: 2}
+  - {fileID: 11400000, guid: 9637b5b1ac1cd5fc2b012d44f3f5c619, type: 2}
   equipedWeapons: []
   player: {fileID: 0}
 --- !u!4 &704793221

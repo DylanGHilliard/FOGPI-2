@@ -49,7 +49,7 @@ public class Health : MonoBehaviour
         }
         if (currentHealth <= 0)
         {
-            Death();
+          
         }
     }
     public void SetMaxHealth(int _amount)
@@ -63,9 +63,10 @@ public class Health : MonoBehaviour
 
 
 
-    private void Death()
+    public void Death()
     {
-        OnDeath.Invoke();
+       OnDeath.Invoke();
     }
 
 }
+ 

@@ -44,7 +44,7 @@ public class PlayerManager : MonoBehaviour
     public GameObject player;
 
 
-    private SaveData saveData = new SaveData(10, 100, 100);
+    private SaveData saveData = new SaveData(10, 100, 100, new List<ScriptableObject>());
     private const string SAVE_KEY = "PlayerSaveData";
 
 
@@ -59,9 +59,11 @@ public class PlayerManager : MonoBehaviour
             Destroy(this);
 
         InitializeComponents();
+        print("initialized components");
         LoadGame();
 
-        
+
+        print(equipedWeapons.Count);
         equipedWeapons = ownedWeapons; //Change latter
 
 
@@ -75,22 +77,6 @@ public class PlayerManager : MonoBehaviour
 
     }
 
-    private void InitializePlayerStats()
-    {
-        // Set initial health
-        if (health != null)
-        {
-
-        }
-
-        // Set initial currency
-        if (wallet != null)
-        {
-
-        }
-
-
-    }
 
     public void SaveGame()
     {
@@ -112,37 +98,38 @@ public class PlayerManager : MonoBehaviour
     public void LoadGame()
     {
     
-            string json = PlayerPrefs.GetString(SAVE_KEY);
-            saveData = JsonUtility.FromJson<SaveData>(json);
+        string json = PlayerPrefs.GetString(SAVE_KEY);
+        Debug.Log("Loading JSON: " + json);
+        saveData = JsonUtility.FromJson<SaveData>(json);
+        // Apply loaded data
+        Debug.Log("Loaded JSON: " + json);
+        health.SetCurrentHealth(saveData.health);
+        health.SetMaxHealth(saveData.maxHealth);
+        wallet.SetCoins(saveData.coins);
+        ownedWeapons.Clear();
+        Debug.Log("Loading owned weapons:");
 
-            // Apply loaded data
-            health.SetCurrentHealth(saveData.health);
-            health.SetMaxHealth(saveData.maxHealth);
-            wallet.SetCoins(saveData.coins);
-            ownedWeapons.Clear();
-
-            foreach (string weaponName in saveData.ownedWeapons)
+        foreach (string weaponName in saveData.ownedWeapons)
+        {
+            WeaponSO weapon = Resources.Load<WeaponSO>(weaponsPath + weaponName);
+            if (weapon != null)
             {
-                ScriptableObject weapon = Resources.Load<ScriptableObject>(weaponsPath + weaponName);
-                if (weapon != null)
-                {
-                    ownedWeapons.Add(weapon);
-                }
-                else
-                {
-                    Debug.LogWarning($"Weapon '{weaponName}' not found in Resources/{weaponsPath}");
-                }
+                ownedWeapons.Add(weapon);
             }
+            else
+            {
+                Debug.LogWarning($"Weapon '{weaponName}' not found in Resources/{weaponsPath}");
+            }
+        }
 
-            Debug.Log("Game loaded successfully");
-
-        
+        Debug.Log("Game loaded successfully");
 
     }
 
     public void RegisterPlayer(GameObject _player)
     {
         player = _player;
+        print("player registered");
         wm = player.AddComponent<WeaponManager>();
 
         for (int i = 0; i < equipedWeapons.Count; i++)
@@ -184,7 +171,7 @@ public class SaveData
     public int maxHealth = 100;
     public List<string> ownedWeapons = new List<string>();
 
-    public SaveData(int _coins, int _health, int _maxHealth, List<ScriptableObject> _ownedWeapons = null)
+    public SaveData(int _coins, int _health, int _maxHealth, List<ScriptableObject> _ownedWeapons)
     {
         coins = _coins;
         health = _health;
