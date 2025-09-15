@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
         if (sceneCamera == null)
             sceneCamera = Camera.main;
         
+        PlayerManager.instance.levelStartingCoins = PlayerManager.instance.wallet.coins;
+        
     }
     void Update()
     {

@@ -5,7 +5,7 @@ public class WalletManager : MonoBehaviour
 
     [SerializeField] private int m_coin = 0;
 
-    public int coin { get { return m_coin; } }
+    public int coins { get { return m_coin; } }
 
     void Awake()
     {

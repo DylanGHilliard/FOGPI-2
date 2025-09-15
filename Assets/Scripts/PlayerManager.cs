@@ -6,6 +6,7 @@ using UnityEngine.Animations;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine.XR.WindowsMR.Input;
+using UnityEngine.SceneManagement;
 
 
 [CustomEditor(typeof(PlayerManager))]
@@ -32,18 +33,22 @@ public class PlayerManagerEditor : Editor
 public class PlayerManager : MonoBehaviour
 {
     public static PlayerManager instance;
+    public GameObject player;
 
     public Health health;
 
     public WalletManager wallet;
-    private WeaponManager wm;
+    public int levelStartingCoins = 10;
 
+
+
+    // Wapon Managerment
+    private WeaponManager wm;
     [SerializeField] private string weaponsPath = "Weapons/";  // Path to weapons in Resources folder
     public List<ScriptableObject> ownedWeapons = new List<ScriptableObject>();
     public List<ScriptableObject> equipedWeapons = new List<ScriptableObject>();
-    public GameObject player;
 
-
+    //Save Vars
     private SaveData saveData = new SaveData(10, 100, 100, new List<ScriptableObject>());
     private const string SAVE_KEY = "PlayerSaveData";
 
@@ -82,7 +87,7 @@ public class PlayerManager : MonoBehaviour
     {
         saveData = new SaveData(
             health.currentHealth,
-            wallet.coin,
+            wallet.coins,
             health.maxHealth,
             ownedWeapons
 
@@ -97,7 +102,7 @@ public class PlayerManager : MonoBehaviour
 
     public void LoadGame()
     {
-    
+
         string json = PlayerPrefs.GetString(SAVE_KEY);
         Debug.Log("Loading JSON: " + json);
         saveData = JsonUtility.FromJson<SaveData>(json);
@@ -136,18 +141,18 @@ public class PlayerManager : MonoBehaviour
         {
             Debug.Log("in FOR LOOP");
             WeaponSO weapon = (WeaponSO)equipedWeapons[i];
-            Weapon weaponTemp = Instantiate(weapon.weaponPrefab, player.transform.position + Vector3.right *0.5f, player.transform.rotation, player.transform).GetComponent<Pistol>();
+            Weapon weaponTemp = Instantiate(weapon.weaponPrefab, player.transform.position + Vector3.right * 0.5f, player.transform.rotation, player.transform).GetComponent<Pistol>();
             print("weaponTemp");
             wm.weapons.Add(weaponTemp);
-             if (i == 0)
-             {
-                 wm.currentWeapon = weaponTemp;
-                 wm.currentWeapon.gameObject.SetActive(true);
-             }
-             else
-             {
-                 weaponTemp.gameObject.SetActive(false);
-             }
+            if (i == 0)
+            {
+                wm.currentWeapon = weaponTemp;
+                wm.currentWeapon.gameObject.SetActive(true);
+            }
+            else
+            {
+                weaponTemp.gameObject.SetActive(false);
+            }
             Debug.Log("Added " + weapon.weaponName);
 
         }
@@ -157,6 +162,15 @@ public class PlayerManager : MonoBehaviour
     private void OnApplicationQuit()
     {
         SaveGame();
+    }
+
+    public void OnDeath()
+    {
+        Debug.Log("Player Died");
+        SceneManager.LoadSceneAsync(0);
+        health.SetCurrentHealth(health.maxHealth);
+        wallet.SetCoins(levelStartingCoins);
+       
     }
 
 

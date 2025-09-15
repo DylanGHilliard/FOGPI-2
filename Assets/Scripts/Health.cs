@@ -8,14 +8,12 @@ public class Health : MonoBehaviour
     public int currentHealth;
     public UnityEvent outOfHealth;
     public UnityEvent hurt;
-    public UnityEvent OnDeath;
     void Start()
     {
         currentHealth = maxHealth;
 
         if (outOfHealth == null)    outOfHealth = new UnityEvent();
         if (hurt == null)           hurt = new UnityEvent();
-        if (OnDeath == null)        OnDeath = new UnityEvent();
     }
 
     public void TakeDamage(int _damage)
@@ -65,7 +63,7 @@ public class Health : MonoBehaviour
 
     public void Death()
     {
-       OnDeath.Invoke();
+        outOfHealth.Invoke();
     }
 
 }
