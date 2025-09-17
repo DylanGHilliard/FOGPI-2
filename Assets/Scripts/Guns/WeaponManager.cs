@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
+#if UNITY_EDITOR
+using UnityEditor;
 [CustomEditor(typeof(WeaponManager))]
 public class WeaponManagerEditor : Editor
 {
@@ -30,6 +31,7 @@ public class WeaponManagerEditor : Editor
 
 }
 
+#endif
 public class WeaponManager : MonoBehaviour
 {
     public List<Weapon> weapons = new List<Weapon>();
@@ -54,8 +56,8 @@ public class WeaponManager : MonoBehaviour
             PrevWeapon();
 
         if (Input.GetKeyDown(KeyCode.E))
-            NextWeapon(); 
-        
+            NextWeapon();
+
     }
 
     public void PrevWeapon()
@@ -67,7 +69,7 @@ public class WeaponManager : MonoBehaviour
         {
             currentWeaponIndex = weapons.Count - 1;
         }
-        
+
         currentWeapon.gameObject.SetActive(false); // Turn off old gun
 
         currentWeapon = weapons[currentWeaponIndex]; // Set new gun and turn on

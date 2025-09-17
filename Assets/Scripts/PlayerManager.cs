@@ -1,14 +1,11 @@
-using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
-using System.IO;
-using UnityEngine.Animations;
 using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine.XR.WindowsMR.Input;
 using UnityEngine.SceneManagement;
 
+#if UNITY_EDITOR
 
+using UnityEditor;
 [CustomEditor(typeof(PlayerManager))]
 
 public class PlayerManagerEditor : Editor
@@ -26,9 +23,13 @@ public class PlayerManagerEditor : Editor
         {
             pm.LoadGame();
         }
+        if (GUILayout.Button("Reset Save Data"))
+        {
+            pm.ResetData();
+        }
     }
 }
-
+#endif
 
 public class PlayerManager : MonoBehaviour
 {
@@ -170,12 +171,23 @@ public class PlayerManager : MonoBehaviour
         SceneManager.LoadSceneAsync(0);
         health.SetCurrentHealth(health.maxHealth);
         wallet.SetCoins(levelStartingCoins);
-       
+
     }
 
 
+    public void ResetData()
+    {
+        List<ScriptableObject> weapon = new List<ScriptableObject>();
+        weapon.Add(Resources.Load<WeaponSO>(weaponsPath + "Pistol"));
+        weapon.Add(Resources.Load<WeaponSO>(weaponsPath + "Shotgun"));
+        SaveData tempSaveData = new SaveData(10, 100, 100, weapon);
+        PlayerPrefs.SetString(SAVE_KEY, JsonUtility.ToJson(tempSaveData, true));
+        Debug.Log("Save data reset.");
+    }
+
 
 }
+
 
 [System.Serializable]
 public class SaveData
