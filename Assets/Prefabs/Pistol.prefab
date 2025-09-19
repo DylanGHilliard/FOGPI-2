@@ -144,7 +144,7 @@ MonoBehaviour:
       m_Calls: []
   bulletPrefab: {fileID: 5219311241103507644, guid: 5d7ba701f4e223838a5dad37900c45b8, type: 3}
   firePoint: {fileID: 3031264277111854651}
-  fireRate: 4
+  fireRate: 3.3
   time: 0
   muzzleFlash: {fileID: 0}
 --- !u!1001 &4324472346515131934

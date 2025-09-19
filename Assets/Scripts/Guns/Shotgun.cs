@@ -20,7 +20,7 @@ public class Shotgun : Weapon
 
             Instantiate(bulletPrefab, firePoint.position, firePoint.rotation * rotation);
             time = 0f;
-            muzzleFlash.Play();
+           // muzzleFlash.Play();
         }
     }
 }

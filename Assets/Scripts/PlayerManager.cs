@@ -159,6 +159,7 @@ public class PlayerManager : MonoBehaviour
         }
     }
 
+
     // Auto-save when application quits
     private void OnApplicationQuit()
     {

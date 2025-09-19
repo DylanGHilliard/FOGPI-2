@@ -8,14 +8,16 @@ public class GameManager : MonoBehaviour
     public bool isPlaying = false;
 
     public PlayerController player;
-    public List<EnemyAI> enemies;  
+    public List<GameObject> enemies;
+    public WinUI win;
+    public int enemiesCount = 1;
+    private float time = 0f;
 
     void Awake()
     {
         if (instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
         }
         else
         {
@@ -23,4 +25,21 @@ public class GameManager : MonoBehaviour
             return;
         }
     }
+
+    void Update()
+    {
+        time += Time.deltaTime;
+        if (time < 1f) return;
+        
+            
+    
+        enemiesCount = GameObject.FindGameObjectsWithTag("Enemy").Length;
+
+        if (enemiesCount <= 0)
+        {
+            win.WinScreen();
+        }
+    }
+    
+    
 }

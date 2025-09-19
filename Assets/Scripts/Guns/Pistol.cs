@@ -9,7 +9,7 @@ public class Pistol : Weapon
         {
             time = 0f;
             Instantiate(bulletPrefab, transform.position, firePoint.rotation);
-            muzzleFlash.Play();
+            //muzzleFlash.Play();
         }
     }
 
