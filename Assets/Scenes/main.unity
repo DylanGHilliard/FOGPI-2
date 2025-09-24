@@ -548,7 +548,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 219931896}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1009773802}
+        m_TargetAssemblyTypeName: PauseMenu, Assembly-CSharp
+        m_MethodName: Exit
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &219931896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5664,7 +5676,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1342794802267002396, guid: b58f8b97099415d28aa7d9118941c97d, type: 3}
       propertyPath: amtToSpawn
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 1342794802267002396, guid: b58f8b97099415d28aa7d9118941c97d, type: 3}
       propertyPath: spawnInterval

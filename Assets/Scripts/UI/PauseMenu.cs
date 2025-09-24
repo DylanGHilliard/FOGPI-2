@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class PauseMenu : MonoBehaviour
 {
     public GameObject pausePannel;
+
     public bool isPaused;
 
     void Start()
@@ -36,5 +37,12 @@ public class PauseMenu : MonoBehaviour
         Time.timeScale = 1;
         pausePannel.SetActive(false);
         isPaused = false;
+    }
+
+    public void Exit()
+    {
+        PlayerManager.instance.OnDeath();
+        pausePannel.SetActive(false);
+        Time.timeScale = 1;
     }
 }

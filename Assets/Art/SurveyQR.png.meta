@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      SurveyQR_0: 6236967995438840975
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
